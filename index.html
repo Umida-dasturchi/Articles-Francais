@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Articles Français - quiz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --olivegreen: #A3B18A;
+      --terracota: #E07A5F;
+      --skyblue: #87BFFF;
+      --lavender: #B497BD;
+      --main-yellow: #FFD166;
+    }
+
+    body {
+      background-color: var(--lavender);
+      color: var(--main-yellow);
+    }
+  </style>
+</head>
+
+<body class="p-4 min-h-screen font-sans">
+  <details>
+    <summary><strong>Правила (на Русском)</strong></summary>
+    <h2>Le</h2>мужской род (определенный артикль).
+    <h2>La</h2>женский род (определенный).
+    <h2>L’</h2>если слово начинается с гласной или h (определенный).
+    <h2>Les</h2>множественное число (определенный).
+    <h2>Un</h2>мужской род (неопределенный артикль).
+    <h2>Une</h2>женский род (неопределенный).
+    <h2>Des</h2>множественное число (неопределенный).
+  </details>
+  <div class="shadow-lg mx-auto p-6 rounded-2xl max-w-3xl" style="background-color: var(--skyblue)">
+    <h1 class="mb-4 font-bold text-2xl text-center">Quiz : les articles Français</h1>
+    <div id="quiz-container" class="space-y-4"></div>
+
+    <div class="flex justify-between items-center mt-6">
+      <button onclick="prevPage()"
+        class="bg-[var(--terracota)] hover:bg-[var(--olivegreen)] px-4 py-2 rounded-xl text-[#FFD166]">Page précédente</button>
+      <span id="page-indicator" class="font-bold text-lg">Page 1 / 2</span>
+      <button onclick="nextPage()"
+        class="bg-[var(--terracota)] hover:bg-[var(--olivegreen)] px-4 py-2 rounded-xl text-[#FFD166]">Page suivante</button>
+    </div>
+
+    <div class="flex justify-center mt-4">
+      <button onclick="submitQuiz()"
+        class="bg-[var(--terracota)] hover:bg-[var(--olivegreen)] px-6 py-2 rounded-xl text-[#FFD166]">Soumettre</button>
+    </div>
+
+    <div id="result" class="mt-6 font-bold text-xl text-center"></div>
+  </div>
+
+  <script>
+    const questions = [
+      { word: "chat", correct: "le" },
+      { word: "maison", correct: "la" },
+      { word: "homme", correct: "l’" },
+      { word: "homme", correct: "un" },
+      { word: "arbres", correct: "les" },
+      { word: "chien", correct: "un" },
+      { word: "fille", correct: "une" },
+      { word: "filles", correct: "les" },
+      { word: "livres", correct: "des" },
+      { word: "livre", correct: "un" },
+      { word: "ordinateur", correct: "l’" },
+      { word: "fleurs", correct: "les" },
+      { word: "fleurs", correct: "des" },
+      { word: "ami", correct: "un" },
+      { word: "ami", correct: "l'" },
+      { word: "amie", correct: "une" },
+      { word: "enfants", correct: "des" },
+      { word: "enfants", correct: "les" },
+      { word: "avion", correct: "l'" },
+      { word: "avion", correct: "un" },
+      { word: "école", correct: "l’" },
+      { word: "garçon", correct: "le" },
+      { word: "garçons", correct: "les" },
+      { word: "garçon", correct: "un" },
+      { word: "voiture", correct: "la" },
+      { word: "animaux", correct: "les" },
+      { word: "vélo", correct: "un" },
+      { word: "vélo", correct: "le" },
+      { word: "femme", correct: "une" },
+      { word: "arbuste", correct: "un" },
+      { word: "arbustes", correct: "les" },
+      { word: "étoile", correct: "une" },
+      { word: "étoile", correct: "l'" },
+      { word: "montagne", correct: "la" },
+      { word: "pomme", correct: "la" },
+      { word: "pomme", correct: "une" },
+      { word: "pantalon", correct: "le" },
+      { word: "hommes", correct: "les" },
+      { word: "maisons", correct: "les" },
+      { word: "idée", correct: "une" },
+      { word: "idées", correct: "des" },
+      { word: "animal", correct: "un" },
+      { word: "eau", correct: "l’" },
+      { word: "histoire", correct: "l’" },
+      { word: "chaussure", correct: "la" },
+      { word: "téléphone", correct: "le" },
+      { word: "stylo", correct: "le" },
+      { word: "stylo", correct: "un" },
+      { word: "radio", correct: "la" },
+      { word: "banane", correct: "une" },
+      { word: "bananes", correct: "des" },
+      { word: "fromage", correct: "le" },
+      { word: "épices", correct: "les" },
+      { word: "robe", correct: "la" },
+      { word: "robe", correct: "une" },
+      { word: "neige", correct: "la" },
+      { word: "ciel", correct: "le" },
+      { word: "yeux", correct: "les" },
+      { word: "nez", correct: "le" },
+      { word: "bras", correct: "le" },
+      { word: "jambes", correct: "les" },
+      { word: "doigts", correct: "les" },
+      { word: "main", correct: "la" },
+      { word: "cheval", correct: "le" },
+      { word: "souris", correct: "la" },
+      { word: "clés", correct: "les" },
+      { word: "clé", correct: "la" },
+      { word: "porte", correct: "la" },
+      { word: "fenêtre", correct: "la" },
+      { word: "pluie", correct: "la" },
+      { word: "soleil", correct: "le" },
+      { word: "vent", correct: "le" },
+      { word: "orage", correct: "l’" },
+      { word: "hôtel", correct: "l’" },
+      { word: "photos", correct: "des" },
+      { word: "pays", correct: "le" },
+      { word: "mer", correct: "la" },
+      { word: "rue", correct: "la" },
+      { word: "jardin", correct: "le" },
+      { word: "feuilles", correct: "les" },
+      { word: "cheveux", correct: "les" },
+      { word: "bijou", correct: "un" },
+      { word: "ville", correct: "la" },
+      { word: "bouteille", correct: "une" },
+      { word: "serveur", correct: "le" },
+      { word: "serveuse", correct: "la" },
+      { word: "boulanger", correct: "le" },
+      { word: "boulangère", correct: "la" },
+      { word: "gâteau", correct: "le" },
+      { word: "baguette", correct: "la" },
+      { word: "église", correct: "l’" },
+      { word: "musique", correct: "la" },
+      { word: "travail", correct: "le" },
+      { word: "lettre", correct: "la" },
+      { word: "chanson", correct: "la" },
+      { word: "film", correct: "le" },
+      { word: "série", correct: "la" },
+      { word: "hiver", correct: "l’" },
+      { word: "été", correct: "l’" },
+      { word: "bois", correct: "le" },
+      { word: "table", correct: "une" },
+      { word: "professeur", correct: "le" },
+      { word: "oiseau", correct: "un" },
+      { word: "étudiants", correct: "des" },
+      { word: "plage", correct: "la" },
+      { word: "arbre", correct: "un" },
+      { word: "université", correct: "l'" },
+      { word: "dictionnaire", correct: "le" },
+      { word: "jus", correct: "le" },
+      { word: "thé", correct: "le" },
+      { word: "poisson", correct: "le" },
+      { word: "hôpital", correct: "l'" },
+      { word: "cahier", correct: "un" },
+      { word: "lumière", correct: "la" },
+      { word: "ordinateur", correct: "un" },
+      { word: "crayon", correct: "un" },
+      { word: "pizza", correct: "la" },
+      { word: "salade", correct: "la" },
+      { word: "parapluie", correct: "le" },
+      { word: "parents", correct: "les" },
+      { word: "lune", correct: "la" },
+      { word: "océan", correct: "l'" },
+      { word: "sable", correct: "le" },
+      { word: "papiers", correct: "des" }
+    ];
+    
+    let currentPage = 1;
+    const perPage = 31;
+    let currentScore = 0;
+    let shuffled = [];
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function renderQuiz() {
+      const start = (currentPage - 1) * perPage;
+      const end = start + perPage;
+      const pageQuestions = shuffled.slice(start, end);
+
+      document.getElementById("page-indicator").textContent = `Page ${ currentPage } / ${Math.ceil(questions.length / perPage)
+    }`;
+    document.getElementById("result").textContent = "";
+
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+
+    pageQuestions.forEach((q, idx) => {
+      const div = document.createElement("div");
+      div.className = "p-4 rounded-xl shadow-md bg-white";
+
+      const qText = document.createElement("p");
+      qText.textContent = `Mot: ${ q.word }`;
+      qText.className = "font-semibold";
+
+      const select = document.createElement("select");
+      select.className = "mt-2 p-2 rounded-md border w-full";
+      select.dataset.answer = q.correct;
+
+      ["le", "la", "l’", "les", "un", "une", "des"].forEach(opt => {
+        const option = document.createElement("option");
+        option.value = opt;
+        option.textContent = opt;
+        select.appendChild(option);
+      });
+
+      select.addEventListener("change", () => {
+        if (select.value === select.dataset.answer) {
+          select.classList.remove("border-red-500");
+          select.classList.add("border-green-500");
+        } else {
+          select.classList.remove("border-green-500");
+          select.classList.add("border-red-500");
+        }
+      });
+
+      div.appendChild(qText);
+      div.appendChild(select);
+      container.appendChild(div);
+    });
+    }
+
+    function nextPage() {
+      if (currentPage < Math.ceil(questions.length / perPage)) {
+        currentPage++;
+        renderQuiz();
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderQuiz();
+      }
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      const selects = 
+      document.querySelectorAll("select");
+      selects.forEach(select => {
+        if (select.value === select.dataset.answer) {
+          score++;
+        }
+      });
+
+      const result =
+      document.getElementById("result");
+      result.innerHTML = `✅ Vous avez ${score} bonne(s) réponse(s) sur ${selects.length}`;
+    }
+
+    function init() {
+      shuffled = shuffle(questions);
+      renderQuiz();
+    }
+
+    init();
+  </script>
+</body>
+
+</html>
