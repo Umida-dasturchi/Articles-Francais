@@ -25,19 +25,6 @@ function Quiz() {
     <div className="min-h-screen bg-gray-100 text-gray-800 p-6">
       <h1 className="text-3xl font-bold text-center mb-6">French Articles Quiz (70 Questions)</h1>
 
-      <div className="bg-white p-4 rounded-2xl shadow-md mb-8">
-        <h2 className="text-xl font-semibold mb-2">Règles (на русском)</h2>
-        <ul className="list-disc list-inside text-sm space-y-1">
-          <li><b>Le</b> — определённый артикль муж. рода, ед. число</li>
-          <li><b>La</b> — определённый артикль жен. рода, ед. число</li>
-          <li><b>L'</b> — перед гласной (оба рода), ед. число</li>
-          <li><b>Les</b> — определённый артикль, множественное число</li>
-          <li><b>Un</b> — неопределённый артикль муж. рода</li>
-          <li><b>Une</b> — неопределённый артикль жен. рода</li>
-          <li><b>Des</b> — неопределённый артикль, множественное число</li>
-        </ul>
-      </div>
-
       <div className="space-y-6">
         {questions.map((q, index) => (
           <div key={index} className="bg-white p-4 rounded-2xl shadow-md">
@@ -88,5 +75,6 @@ function Quiz() {
     </div>
   );
 }
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(<Quiz />);
